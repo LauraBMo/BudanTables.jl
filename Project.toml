@@ -1,0 +1,13 @@
+name = "BudanTables"
+uuid = "80ff49b3-04a0-4e7c-b251-eb5cfd69ff41"
+authors = ["Laura Brustenga i Moncusí <brust@math.ku.dk> and contributors"]
+version = "0.1.0"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+julia = "1"
+
+[targets]
+test = ["Test"]
