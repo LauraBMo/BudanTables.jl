@@ -6,7 +6,7 @@ monicderivative(p, i::Int) = derivative(p, degree(p)-i)*factorial(i)/factorial(d
 rectangle(x1, y1, x2, y2) = ([x1,x2,x2,x1], [y1,y1,y2,y2])
 
 isapproxreal(x::Real) = true
-isapproxreal(x::Complex{T}) where {T} = isapprox(imag(x), zero(T))
+isapproxreal(x::Complex{T}; atol::Real=1e-7) where {T} = abs(imag(x)) < atol
 realroots(poly) = real.(filter(isapproxreal, _ROOTS[](poly)))
 
 function ithrectangles(sortrealroots, i;
