@@ -105,9 +105,7 @@ function budantable end
                    gray=.5, black=.8,
                    color=:gray)
     p, = bt.args
-    allroots = [sort(realroots(monicderivative(p,i))) for i in 0:degree(p)]
-    lower, upper = find_bounds(allroots)
-    xplus = (upper - lower)/5
+    # Set color globally
     color := color
     # add a legend
     legend --> true
@@ -120,6 +118,10 @@ function budantable end
         opacity := black
         []
     end
+    # Plot the boxes of each row
+    allroots = [sort(realroots(monicderivative(p,i))) for i in 0:degree(p)]
+    lower, upper = find_bounds(allroots)
+    xplus = (upper - lower)/5
     for (i, rts) in enumerate(allroots)
         # Plot ith row
         boxes = ithrectangles(rts, i;
