@@ -51,7 +51,9 @@ But, if [PolynomialRoots.jl](https://github.com/giordano/PolynomialRoots.jl) is 
 ## Default use, type `Polynomials` and roots `Polynomials.roots`
 
 ```julia
+   using Plots
    using Polynomials
+   using BudanTables
    P = fromroots([0,0,1,2,2,4,4])
    budantable(P)
 ```
@@ -59,8 +61,10 @@ But, if [PolynomialRoots.jl](https://github.com/giordano/PolynomialRoots.jl) is 
 ## Use type `Polynomials` and roots `PolynomialRoots.roots`
 
 ```julia
+   using Plots
    using Polynomials
    using PolynomialRoots
+   using BudanTables
    P = fromroots([0,0,1,2,2,4,4])
    budantable(P)
 ```
@@ -68,12 +72,12 @@ But, if [PolynomialRoots.jl](https://github.com/giordano/PolynomialRoots.jl) is 
 ## Or define our own API for julia vectors:
 
 ```julia
-   using BudanTables
    using Plots
+   using BudanTables
 
    # Setting function to compute roots from a polynomial represented
    # as a vector.
-   import PolynomialRoots as PR
+   import PolynomialRoots
    _BigFloat(A::AbstractArray) = BigFloat.(A)
    # Notice we do not precompose by `coeffs`
    set_getting_roots(PolynomialRoots.roots∘_BigFloat)
@@ -89,7 +93,8 @@ But, if [PolynomialRoots.jl](https://github.com/giordano/PolynomialRoots.jl) is 
        return out
    end
 
-   P = [0,0,1,2,2,4,4]
+   import Polynomials
+   P = Polynomials.coeffs(Polynomials.fromroots([0,0,1,2,2,4,4]))
    budantable(P)
 ```
 """
