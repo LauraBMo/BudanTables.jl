@@ -12,7 +12,7 @@ or
 
 #+begin_src julia
 import Pkg
-Pkg.add("https://github.com/LauraBMo/BudanTables.jl.git")
+Pkg.add(url="https://github.com/LauraBMo/BudanTables.jl.git")
 #+end_src
 
 * Introduction
@@ -30,7 +30,9 @@ But, if [[https://github.com/giordano/PolynomialRoots.jl][PolynomialRoots.jl]] i
 **** Default use, type `Polynomials` and roots `Polynomials.roots`
 
 #+begin_src julia
+using Plots
 using Polynomials
+using BudanTables
 P = fromroots([0,0,1,2,2,4,4])
 budantable(P)
 #+end_src
@@ -38,36 +40,39 @@ budantable(P)
 **** Use type `Polynomials` and roots `PolynomialRoots.roots`
 
 #+begin_src julia
-   using Polynomials
-   using PolynomialRoots
-   P = fromroots([0,0,1,2,2,4,4])
-   budantable(P)
+using Plots
+using Polynomials
+using PolynomialRoots
+using BudanTables
+P = fromroots([0,0,1,2,2,4,4])
+budantable(P)
 #+end_src
 
 **** Or define our own API for julia vectors:
 
 #+begin_src julia
-   using BudanTables
-   using Plots
+using Plots
+using BudanTables
 
-   # Setting function to compute roots from a polynomial represented
-   # as a vector.
-   import PolynomialRoots as PR
-   _BigFloat(A::AbstractArray) = BigFloat.(A)
-   # Notice we do not precompose by `coeffs`
-   set_getting_roots(PolynomialRoots.roots∘_BigFloat)
+# Setting function to compute roots from a polynomial represented
+# as a vector.
+import PolynomialRoots
+_BigFloat(A::AbstractArray) = BigFloat.(A)
+# Notice we do not precompose by `coeffs`
+set_getting_roots(PolynomialRoots.roots∘_BigFloat)
 
-   BudanTables.degree(v::AbstractVector) = length(v) - 1
-   BudanTables.derivative(v::AbstractVector) = .*(v[begin+1:end], 1:(length(v)-1))
-   function BudanTables.derivative(v::AbstractVector, i::Int)
-       out = copy(v)
-       while i > 0
-           i-=1
-           out = derivative(out)
-       end
-       return out
-   end
+BudanTables.degree(v::AbstractVector) = length(v) - 1
+BudanTables.derivative(v::AbstractVector) = .*(v[begin+1:end], 1:(length(v)-1))
+function BudanTables.derivative(v::AbstractVector, i::Int)
+    out = copy(v)
+    while i > 0
+        i-=1
+        out = derivative(out)
+    end
+    return out
+end
 
-   P = [0,0,1,2,2,4,4]
-   budantable(P)
+import Polynomials
+P = Polynomials.coeffs(Polynomials.fromroots([0,0,1,2,2,4,4]))
+budantable(P)
 #+end_src
