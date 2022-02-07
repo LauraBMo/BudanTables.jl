@@ -5,9 +5,10 @@
 * Introduction
 
 Package for ploting Budan's tables (see https://hal.inria.fr/hal-00653762/document).
-Examples of use:
 
-** Using Polynomials' types and api:
+Examples of use (also see helps of =budantable= and =set_getting_roots=):
+
+** Using Polynomials' types and api (default):
 
 #+begin_src julia
    using BudanTables
@@ -19,7 +20,7 @@ Examples of use:
    budantable(pp)
 #+end_src
 
-** Or define our own api for julia vectors:
+** Or defining our own api for julia vectors:
 
 #+begin_src julia :results output
    using BudanTables
