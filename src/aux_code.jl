@@ -1,14 +1,13 @@
 
 monicderivative(p, i::Int) = derivative(p, degree(p)-i)*factorial(i)/factorial(degree(p))
 
-# define a function that returns a Plots.Shape
-# code from https://discourse.julialang.org/t/how-to-draw-a-rectangular-region-with-plots-jl/1719/4
-rectangle(x1, y1, x2, y2) = ([x1,x2,x2,x1], [y1,y1,y2,y2])
-
 isapproxreal(x::Real) = true
 isapproxreal(x::Complex{T}; atol::Real=1e-7) where {T} = abs(imag(x)) < atol
 realroots(poly) = real.(filter(isapproxreal, _ROOTS[](poly)))
 
+# define a function that returns a Plots.Shape
+# code from https://discourse.julialang.org/t/how-to-draw-a-rectangular-region-with-plots-jl/1719/4
+rectangle(x1, y1, x2, y2) = ([x1,x2,x2,x1], [y1,y1,y2,y2])
 function ithrectangles(sortrealroots, i;
                        mininf=-5, inf=5, w=.5)
     xs = [mininf; sortrealroots]
