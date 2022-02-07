@@ -16,22 +16,8 @@ $(SIGNATURES)
 
 Sets the function used to compute the roots of polynomials building a Budan's table.
 The input is a function `f` computing the roots of a polynomial represented as an object of type `T`, for which `degree(p::T)` and `derivative(p::T)` must be defined.
-By default it uses `roots` from [Polynomials.jl](https://github.com/JuliaMath/Polynomials.jl).
 
 See also [`budantable`](@ref)
-
-# Examples
-
-## For polynomials of type `Polynomial`:
-
-```julia
-   using Polynomials
-   pp = Polynomial([-1,2,3])
-   import PolynomialRoots as PR # Fast roots
-   # Notice pre-composition with Polynomials' `coeffs`.
-   BudanTables.set_getting_roots(PR.roots∘coeffs)
-   budantable(pp)
-```
 """
 function set_getting_roots(f)
     _ROOTS[] = f
@@ -52,35 +38,47 @@ include("aux_code.jl")
 """
 $(SIGNATURES)
 
-Plots the Budan's table of a given polynomial (see https://hal.inria.fr/hal-00653762/document).
+Plots the Budan's table of a polynomial (see https://hal.inria.fr/hal-00653762/document).
 The input is a polynomial of type `T` for which
 - `degree(p::T)` and `derivative(p::T, i::Int)` must be defined
-- it is compatible with function computing roots (see [`BudanTables.set_getting_roots`](@ref)).
+- it is compatible with function computing roots (see [`set_getting_roots`](@ref)).
 
-By default it uses `T==Polynomial` from [Polynomials.jl](https://github.com/JuliaMath/Polynomials.jl).
+The default are type `T==Polynomial` and `Polynomials.roots` from [Polynomials.jl](https://github.com/JuliaMath/Polynomials.jl).
+But, if [PolynomialRoots.jl](https://github.com/giordano/PolynomialRoots.jl) is loaded, it uses `PolynomialRoots.roots` (accepting polynomials of type `Polynomial`).
 
 # Examples
 
-## Using Polynomials' types and api:
+## Default use, type `Polynomials` and roots `Polynomials.roots`
 
 ```julia
-   using BudanTables
-   using Plots
-
    using Polynomials
-
-   pp = Polynomial([-1,2,3])
-   budantable(pp)
+   P = fromroots([0,0,1,2,2,4,4])
+   budantable(P)
 ```
 
-## Or define our own api for julia vectors:
+## Use type `Polynomials` and roots `PolynomialRoots.roots`
+
+```julia
+   using Polynomials
+   using PolynomialRoots
+   P = fromroots([0,0,1,2,2,4,4])
+   budantable(P)
+```
+
+## Or define our own API for julia vectors:
 
 ```julia
    using BudanTables
    using Plots
 
-   BudanTables.degree(v::AbstractVector) = length(v) - 1
+   # Setting function to compute roots from a polynomial represented
+   # as a vector.
+   import PolynomialRoots as PR
+   _BigFloat(A::AbstractArray) = BigFloat.(A)
+   # Notice we do not precompose by `coeffs`
+   set_getting_roots(PolynomialRoots.roots∘_BigFloat)
 
+   BudanTables.degree(v::AbstractVector) = length(v) - 1
    BudanTables.derivative(v::AbstractVector) = .*(v[begin+1:end], 1:(length(v)-1))
    function BudanTables.derivative(v::AbstractVector, i::Int)
        out = copy(v)
@@ -91,12 +89,8 @@ By default it uses `T==Polynomial` from [Polynomials.jl](https://github.com/Juli
        return out
    end
 
-   # PolynomialRoots.jl represents polynomials as julia vectors.
-   import PolynomialRoots as PR
-   BudanTables.set_getting_roots(PR.roots)
-
-   pp = [-1,-2,3,4]
-   budantable(pp)
+   P = [0,0,1,2,2,4,4]
+   budantable(P)
 ```
 """
 function budantable end
