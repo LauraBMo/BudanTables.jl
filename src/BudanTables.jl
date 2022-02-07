@@ -96,9 +96,7 @@ function budantable end
                    color=:gray)
     p, = bt.args
     allroots = [sort(realroots(monicderivative(p,i))) for i in 0:degree(p)]
-    actualroots = filter((!)∘isempty, allroots)
-    _xmin = minimum(first.(actualroots)) - xplus
-    _xmax = maximum(last.(actualroots)) + xplus
+    mininf, inf = find_bounds(allroots, xplus)
     color := color
     # add a legend
     legend --> true
@@ -114,7 +112,7 @@ function budantable end
     for (i, rts) in enumerate(allroots)
         # Plot ith row
         boxes = ithrectangles(rts, i;
-                              mininf=_xmin, inf=_xmax, w=w)
+                              mininf=mininf, inf=inf, w=w)
         colors = ithcolors(iseven(i), length(boxes), gray, black)
         for (box, col) in zip(boxes, colors)
             @series begin

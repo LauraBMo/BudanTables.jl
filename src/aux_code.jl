@@ -20,3 +20,9 @@ function ithcolors(_iseven::Bool, nboxes, gray, black)
     blacks = (!).(grays)
     return gray*grays + black*blacks
 end
+
+function find_bounds(allsortvectors, rad)
+    nonempty_vectors = filter((!)∘isempty, allsortvectors)
+    mins, maxs = first.(nonempty_vectors), last.(nonempty_vectors)
+    return minimum(mins) - rad, maximum(maxs) + rad
+end
