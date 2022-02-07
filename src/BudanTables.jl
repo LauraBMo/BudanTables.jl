@@ -125,6 +125,6 @@ function budantable end
     end
 end
 
-# Plots.@deps boxplot shape
+# Plots.@deps budantable shape
 
 end
