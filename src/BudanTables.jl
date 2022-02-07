@@ -8,14 +8,18 @@ using Polynomials:roots, derivative, degree # Polynomial type, roots function
 const _ROOTS = Ref{Function}(roots)
 
 """
-
 $(SIGNATURES)
 
 Sets the function used to compute the roots of polynomials building a Budan's table.
 The input is a function `f` computing the roots of a polynomial represented as an object of type `T`, for which `degree(p::T)` and `derivative(p::T)` must be defined.
 By default it uses `roots` from [Polynomials.jl](https://github.com/JuliaMath/Polynomials.jl).
 
-An example of valid input for polynomials of type `Polynomial` is the following:
+See also [`budantable`](@ref)
+
+# Examples
+
+## For polynomials of type `Polynomial`:
+
 ```julia
    using Polynomials
    pp = Polynomial([-1,2,3])
@@ -35,19 +39,18 @@ include("aux_code.jl")
 export BudanTable, budantable
 
 """
-
 $(SIGNATURES)
 
 Plots the Budan's table of a given polynomial (see https://hal.inria.fr/hal-00653762/document).
 The input is a polynomial of type `T` for which
-1.- `degree(p::T)` and `derivative(p::T, i::Int)` must be defined
-2.- it is compatible with function computing roots `f` (see help of `BudanTables.set_getting_roots`).
+- `degree(p::T)` and `derivative(p::T, i::Int)` must be defined
+- it is compatible with function computing roots (see [`BudanTables.set_getting_roots`](@ref)).
 
 By default it uses `T==Polynomial` from [Polynomials.jl](https://github.com/JuliaMath/Polynomials.jl).
 
-Examples of use:
+# Examples
 
-Using Polynomials' types and api:
+## Using Polynomials' types and api:
 
 ```julia
    using BudanTables
@@ -59,7 +62,7 @@ Using Polynomials' types and api:
    budantable(pp)
 ```
 
-Or define our own api for julia vectors:
+## Or define our own api for julia vectors:
 
 ```julia
    using BudanTables
