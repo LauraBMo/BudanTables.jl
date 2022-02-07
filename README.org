@@ -1,1 +1,42 @@
 # BudanTables [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/stable) [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/dev) [![Build Status](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml?query=branch%3Amain) [![Coverage](https://codecov.io/gh/LauraBMo/BudanTables.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/LauraBMo/BudanTables.jl)
+
+Package for ploting Budan's tables (see https://hal.inria.fr/hal-00653762/document).
+Examples of use:
+
+Using Polynomials' types and api:
+
+```julia
+   using BudanTables
+   using Plots
+
+   using Polynomials
+
+   pp = Polynomial([-1,2,3])
+   budantable(pp)
+```
+
+Or define our own api for julia vectors:
+
+```julia
+   using BudanTables
+   using Plots
+
+   BudanTables.degree(v::AbstractVector) = length(v) - 1
+
+   BudanTables.derivative(v::AbstractVector) = .*(v[begin+1:end], 1:(length(v)-1))
+   function BudanTables.derivative(v::AbstractVector, i::Int)
+       out = copy(v)
+       while i > 0
+           i-=1
+           out = derivative(out)
+       end
+       return out
+   end
+
+   # PolynomialRoots.jl represents polynomials as julia vectors.
+   import PolynomialRoots as PR
+   BudanTables.set_getting_roots(PR.roots)
+
+   pp = [-1,-2,3,4]
+   budantable(pp)
+```

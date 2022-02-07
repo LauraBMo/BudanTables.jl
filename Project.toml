@@ -3,11 +3,16 @@ uuid = "80ff49b3-04a0-4e7c-b251-eb5cfd69ff41"
 authors = ["Laura Brustenga i Moncusí <brust@math.ku.dk> and contributors"]
 version = "0.1.0"
 
-[extras]
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+[deps]
+DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+RecipesBase = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
 
 [compat]
 julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
 test = ["Test"]
