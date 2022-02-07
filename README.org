@@ -1,9 +1,13 @@
-# BudanTables [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/stable) [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/dev) [![Build Status](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml?query=branch%3Amain) [![Coverage](https://codecov.io/gh/LauraBMo/BudanTables.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/LauraBMo/BudanTables.jl)
+#+TITLE: BudanTables.jl  [[https://LauraBMo.github.io/BudanTables.jl/stable][https://img.shields.io/badge/docs-stable-blue.svg]] [[https://LauraBMo.github.io/BudanTables.jl/dev][https://img.shields.io/badge/docs-dev-blue.svg]] [[https://github.com/LauraBMo/BudanTables.jl/actions][https://github.com/LauraBMo/BudanTables.jl/workflows/CI/badge.svg]] [[https://codecov.io/gh/LauraBMo/BudanTables.jl][https://codecov.io/gh/LauraBMo/BudanTables.jl/branch/master/graph/badge.svg]]
+
+# * BudanTables [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/stable) [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/dev) [![Build Status](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml?query=branch%3Amain) [![Coverage](https://codecov.io/gh/LauraBMo/BudanTables.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/LauraBMo/BudanTables.jl)
+
+* Introduction
 
 Package for ploting Budan's tables (see https://hal.inria.fr/hal-00653762/document).
 Examples of use:
 
-Using Polynomials' types and api:
+** Using Polynomials' types and api:
 
 #+begin_src julia
    using BudanTables
@@ -15,7 +19,7 @@ Using Polynomials' types and api:
    budantable(pp)
 #+end_src
 
-Or define our own api for julia vectors:
+** Or define our own api for julia vectors:
 
 #+begin_src julia :results output
    using BudanTables
@@ -38,5 +42,5 @@ Or define our own api for julia vectors:
    BudanTables.set_getting_roots(PR.roots)
 
    pp = [-1,-2,3,4]
-   budantable(pp)
+   budantable(pp; legend=false)
 #+end_src
