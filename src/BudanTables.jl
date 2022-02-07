@@ -101,12 +101,13 @@ But, if [PolynomialRoots.jl](https://github.com/giordano/PolynomialRoots.jl) is 
 function budantable end
 
 @recipe function f(bt::BudanTable;
-                   xplus=2, w=.5,
+                   w=.5,
                    gray=.5, black=.8,
                    color=:gray)
     p, = bt.args
     allroots = [sort(realroots(monicderivative(p,i))) for i in 0:degree(p)]
-    mininf, inf = find_bounds(allroots, xplus)
+    lower, upper = find_bounds(allroots)
+    xplus = (upper - lower)/5
     color := color
     # add a legend
     legend --> true
@@ -122,7 +123,7 @@ function budantable end
     for (i, rts) in enumerate(allroots)
         # Plot ith row
         boxes = ithrectangles(rts, i;
-                              mininf=mininf, inf=inf, w=w)
+                              mininf=lower-xplus, inf=upper+xplus, w=w)
         colors = ithcolors(iseven(i), length(boxes), gray, black)
         for (box, col) in zip(boxes, colors)
             @series begin
