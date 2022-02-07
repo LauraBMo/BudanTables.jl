@@ -12,9 +12,10 @@ const _ROOTS = Ref{Function}(roots)
 $(SIGNATURES)
 
 Sets the method used to compute the roots of the polynomials for drawing a Budan's table.
-The input is a function `f` computing the roots of a polynomial of type `T` for which `degree(p::T)` and `derivative(p::T)` must be defined (e.g., `T==Polynomial` from Polynomials.jl).
-An example of valid input for polynomials of type `Polynomial` is the following:
+The input is a function `f` computing the roots of a polynomial represented as an object of type `T`, for which `degree(p::T)` and `derivative(p::T)` must be defined (e.g., `T==Polynomial` from Polynomials.jl).
+By default it uses `roots` from [Polynomials.jl](https://github.com/JuliaMath/Polynomials.jl).
 
+An example of valid input for polynomials of type `Polynomial` is the following:
 ```julia
    using Polynomials
    pp = Polynomial([-1,2,3])
