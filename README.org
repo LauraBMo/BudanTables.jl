@@ -1,7 +1,5 @@
 #+TITLE: BudanTables.jl  [[https://LauraBMo.github.io/BudanTables.jl/stable][https://img.shields.io/badge/docs-stable-blue.svg]] [[https://LauraBMo.github.io/BudanTables.jl/dev][https://img.shields.io/badge/docs-dev-blue.svg]] [[https://github.com/LauraBMo/BudanTables.jl/actions][https://github.com/LauraBMo/BudanTables.jl/workflows/CI/badge.svg]] [[https://codecov.io/gh/LauraBMo/BudanTables.jl][https://codecov.io/gh/LauraBMo/BudanTables.jl/branch/master/graph/badge.svg]]
 
-# * BudanTables [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/stable) [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/dev) [![Build Status](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml?query=branch%3Amain) [![Coverage](https://codecov.io/gh/LauraBMo/BudanTables.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/LauraBMo/BudanTables.jl)
-
 * Install
 
 #+begin_src julia
@@ -27,7 +25,7 @@ But, if [[https://github.com/giordano/PolynomialRoots.jl][PolynomialRoots.jl]] i
 
 ** Examples
 
-**** Default use, type `Polynomials` and roots `Polynomials.roots`
+**** Default use, type =Polynomials= and roots =Polynomials.roots=
 
 #+begin_src julia
 using Plots
@@ -37,7 +35,7 @@ P = fromroots([0,0,1,2,2,4,4])
 budantable(P)
 #+end_src
 
-**** Use type `Polynomials` and roots `PolynomialRoots.roots`
+**** Use type =Polynomials= and roots =PolynomialRoots.roots=
 
 #+begin_src julia
 using Plots
@@ -49,6 +47,8 @@ budantable(P)
 #+end_src
 
 **** Or define our own API for julia vectors:
+
+Type =Vector= and roots =PolynomialRoots.roots=
 
 #+begin_src julia
 using Plots
