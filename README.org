@@ -2,32 +2,62 @@
 
 # * BudanTables [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/stable) [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://LauraBMo.github.io/BudanTables.jl/dev) [![Build Status](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/LauraBMo/BudanTables.jl/actions/workflows/CI.yml?query=branch%3Amain) [![Coverage](https://codecov.io/gh/LauraBMo/BudanTables.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/LauraBMo/BudanTables.jl)
 
+* Install
+
+#+begin_src julia
+add https://github.com/LauraBMo/BudanTables.jl.git
+#+end_src
+
+or
+
+#+begin_src julia
+import Pkg
+Pkg.add("https://github.com/LauraBMo/BudanTables.jl.git")
+#+end_src
+
 * Introduction
 
-Package for ploting Budan's tables (see https://hal.inria.fr/hal-00653762/document).
+Plots the Budan's table of a polynomial (see https://hal.inria.fr/hal-00653762/document).
+The type =T= representing polynomials needs methods
+- =BudanTables.degree(p::T)= and =BudanTables.derivative(p::T, i::Int)= must be defined,
+- and it have to be compatible with the function =_ROOTS= computing roots (see =set_getting_roots= help).
 
-Examples of use (also see helps of =budantable= and =set_getting_roots=):
+The defaults are type =Polynomial= and function =Polynomials.roots= from [[https://github.com/JuliaMath/Polynomials.jl][Polynomials.jl]].
+But, if [[https://github.com/giordano/PolynomialRoots.jl][PolynomialRoots.jl]] is loaded, it uses =PolynomialRoots.roots= (accepting polynomials of type =Polynomial=).
 
-** Using Polynomials' types and api (default):
+** Examples
+
+**** Default use, type `Polynomials` and roots `Polynomials.roots`
+
+#+begin_src julia
+using Polynomials
+P = fromroots([0,0,1,2,2,4,4])
+budantable(P)
+#+end_src
+
+**** Use type `Polynomials` and roots `PolynomialRoots.roots`
+
+#+begin_src julia
+   using Polynomials
+   using PolynomialRoots
+   P = fromroots([0,0,1,2,2,4,4])
+   budantable(P)
+#+end_src
+
+**** Or define our own API for julia vectors:
 
 #+begin_src julia
    using BudanTables
    using Plots
 
-   using Polynomials
-
-   pp = Polynomial([-1,2,3])
-   budantable(pp)
-#+end_src
-
-** Or defining our own api for julia vectors:
-
-#+begin_src julia :results output
-   using BudanTables
-   using Plots
+   # Setting function to compute roots from a polynomial represented
+   # as a vector.
+   import PolynomialRoots as PR
+   _BigFloat(A::AbstractArray) = BigFloat.(A)
+   # Notice we do not precompose by `coeffs`
+   set_getting_roots(PolynomialRoots.roots∘_BigFloat)
 
    BudanTables.degree(v::AbstractVector) = length(v) - 1
-
    BudanTables.derivative(v::AbstractVector) = .*(v[begin+1:end], 1:(length(v)-1))
    function BudanTables.derivative(v::AbstractVector, i::Int)
        out = copy(v)
@@ -38,10 +68,6 @@ Examples of use (also see helps of =budantable= and =set_getting_roots=):
        return out
    end
 
-   # PolynomialRoots.jl represents polynomials as julia vectors.
-   import PolynomialRoots as PR
-   BudanTables.set_getting_roots(PR.roots)
-
-   pp = [-1,-2,3,4]
-   budantable(pp; legend=false)
+   P = [0,0,1,2,2,4,4]
+   budantable(P)
 #+end_src
