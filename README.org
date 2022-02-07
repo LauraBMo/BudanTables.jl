@@ -5,7 +5,7 @@ Examples of use:
 
 Using Polynomials' types and api:
 
-```julia
+#+begin_src julia
    using BudanTables
    using Plots
 
@@ -13,11 +13,11 @@ Using Polynomials' types and api:
 
    pp = Polynomial([-1,2,3])
    budantable(pp)
-```
+#+end_src
 
 Or define our own api for julia vectors:
 
-```julia
+#+begin_src julia :results output
    using BudanTables
    using Plots
 
@@ -39,4 +39,4 @@ Or define our own api for julia vectors:
 
    pp = [-1,-2,3,4]
    budantable(pp)
-```
+#+end_src
